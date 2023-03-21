@@ -69,16 +69,15 @@ function confirmPassword() {
 
 
 
-function confirmIdNumber(string) {
-    let result = new RegExp(/^[0-9\b]+$/)
+function confirmIdNumber() {
+    let regex = /^[0-9]+$/
     const parent = idNumber.parentElement
     if (idNumber.value === '') {
         addError(parent)
         parent.querySelector('.error-message').innerText =
             'id-number is required'
         return false;
-    } else if (idNumber.value !== result.test(idNumber.value)) {
-
+    } else if (!regex.test(idNumber.value)) {
         addError(parent)
         parent.querySelector('.error-message').innerText =
             'only numbers are allowed'
