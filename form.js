@@ -82,7 +82,13 @@ function confirmIdNumber() {
         parent.querySelector('.error-message').innerText =
             'only numbers are allowed'
         return false
-    } else {
+    } else if(idNumber.value.length < 11) {
+        addError(parent)
+        parent.querySelector('.error-message').innerText =
+            'it must be 11 character'
+        return false
+    }
+    else {
         parent.classList.remove('error')
         parent.classList.add('success')
         parent.querySelector('.error-message').innerText = ''
@@ -92,9 +98,7 @@ function confirmIdNumber() {
 
 function checkEmail() {
     const parent = emailInput.parentElement;
-    // console.log(emailInput.validity);
 
-    // console.log(/[ა-ჰ]/.test(emailInput.value));
     if (emailInput.value === "") {
         addError(parent);
         parent.querySelector(".error-message").innerText = "email is required";
@@ -119,14 +123,13 @@ idNumber.addEventListener('input', confirmIdNumber)
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    // console.log("submit");
+
     const isPasswordCorrect = checkPassword();
     const isEmailCorrect = checkEmail();
     const confirmPassword = confirmPassword();
-    // console.log(emailInput.validity.valid);
-    // console.log(passwordInput.value);
-    // console.log(isPasswordCorrect, isEmailCorrect);
-    if (isEmailCorrect && isPasswordCorrect && confirmPassword) {
+    const confirmIdNumber = confirmIdNumber()
+
+    if (isEmailCorrect && isPasswordCorrect && confirmPassword && confirmIdNumber) {
         // form.submit();
         modalMessage.innerText = "form sent successfully";
         modal.classList.add("active-modal");
